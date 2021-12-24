@@ -16,3 +16,4 @@ MonoBehaviour:
   DamageAttackPoints: 3
   AttackRange: 5
   MoveRange: 6
+  Prefab: {fileID: 9004805563940228502, guid: 98822c9e0f2ed044ea3af9dbc753f67f, type: 3}

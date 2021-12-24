@@ -9,4 +9,5 @@ public class UnitSettings : ScriptableObject
     public int DamageAttackPoints;
     public int AttackRange;
     public int MoveRange;
+    public Unit Prefab;
 }

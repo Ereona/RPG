@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaneTile : MonoBehaviour
+public enum Owner
 {
-    public Vector2Int Coords { get; set; }
+    Player,
+    Enemy
 }

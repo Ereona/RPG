@@ -29,24 +29,42 @@ public class BattlefieldController : MonoBehaviour
         {
             for (int j = 0; j < _settings.N; j++)
             {
-                CreatePlaneTile(new Vector3Int(i, j, 0));
+                CreatePlaneTile(new Vector2Int(i, j));
             }
+        }
+
+        List<Unit> _units = new List<Unit>();
+        foreach (BattleFieldUnitData data in _settings.PlayerUnits)
+        {
+            _units.Add(CreateUnit(Owner.Player, data));
+        }
+        foreach (BattleFieldUnitData data in _settings.EnemyUnits)
+        {
+            _units.Add(CreateUnit(Owner.Enemy, data));
         }
     }
 
-    private void CreatePlaneTile(Vector3Int pos)
+    private PlaneTile CreatePlaneTile(Vector2Int pos)
     {
         PlaneTile tile = _fabric.CreatePlaneTile();
         tile.Coords = pos;
         tile.transform.localPosition = CalcPosition(pos);
         tile.transform.localScale = Vector3.one * _cellSize;
+        return tile;
     }
 
-    private Vector3 CalcPosition(Vector3Int pos)
+    private Unit CreateUnit(Owner owner, BattleFieldUnitData data)
+    {
+        Unit unit = _fabric.CreateUnit(owner, data);
+        unit.transform.localPosition = CalcPosition(new Vector2Int(data.MPos, data.NPos));
+        unit.transform.localScale = Vector3.one * _cellSize;
+        return unit;
+    }
+
+    private Vector3 CalcPosition(Vector2Int pos)
     {
         float x = pos.x * _cellSize - _planeXSize / 2;
-        float y = pos.z * _cellSize;
         float z = pos.y * _cellSize - _planeYSize / 2;
-        return new Vector3(x, y, z);
+        return new Vector3(x, 0, z);
     }
 }
