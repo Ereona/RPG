@@ -45,9 +45,9 @@ public class BattleController : MonoBehaviour
                 PlaneTile tile = transform.GetComponentInParent<PlaneTile>();
                 if (tile != null)
                 {
-                    if (_state.CanMoveTo(tile.Coords))
+                    if (_state.CanMoveTo(tile))
                     {
-                        _state.DoMove(tile.Coords);
+                        _state.DoMove(tile);
                     }
                 }
             }

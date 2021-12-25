@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4848540527798528317}
   - component: {fileID: 2553638994577243776}
+  - component: {fileID: 9154602316567056004}
   m_Layer: 0
   m_Name: PlaneTile
   m_TagString: Untagged
@@ -44,6 +45,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e755a138afe1c848baa13a47817cc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _visual: {fileID: 9154602316567056004}
+--- !u!114 &9154602316567056004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4168233381672786036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc79c40f427fa534197f143f30331e97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mesh: {fileID: 702497567086542168}
+  _normalColor: {r: 0.5803922, g: 0.8, b: 0.5921569, a: 1}
+  _targetColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &5499460026422527159
 GameObject:
   m_ObjectHideFlags: 0

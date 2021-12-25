@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public class Unit : FieldEntity
 {
+    [SerializeField]
+    private UnitVisual _visual;
+
     private UnitSettings _settings;
     public UnitSettings Settings 
     {
@@ -14,8 +17,17 @@ public class Unit : MonoBehaviour
             Health = _settings.HealthPoints;
         }
     }
-    public Owner Owner { get; private set; }
-    public Vector2Int Pos { get; private set; }
+    private Owner _owner;
+    public Owner Owner 
+    {
+        get { return _owner; } 
+        private set
+        {
+            _owner = value;
+            _visual.SetOwner(value);
+        }
+    }
+
     public BattlefieldController Controller { get; set; }
 
     public int Health { get; private set; }
@@ -23,13 +35,13 @@ public class Unit : MonoBehaviour
     public void Init(Owner owner, Vector2Int pos)
     {
         Owner = owner;
-        Pos = pos;
+        Coords = pos;
     }
 
     public void Move(Vector2Int target)
     {
-        Pos = target;
-        transform.localPosition = Controller.CalcPosition(Pos);
+        Coords = target;
+        transform.localPosition = Controller.CalcPosition(Coords);
     }
 
     public void Attack()
@@ -54,10 +66,16 @@ public class Unit : MonoBehaviour
 
     public void Select()
     {
+        _visual.Select();
     }
 
     public void Deselect()
     {
+        _visual.Deselect();
+    }
 
+    public override void SetIsTarget(bool value)
+    {
+        _visual.SetIsTarget(value);
     }
 }

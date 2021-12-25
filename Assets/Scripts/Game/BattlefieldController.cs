@@ -27,11 +27,12 @@ public class BattlefieldController : MonoBehaviour
         _planeXSize = _cellSize * _settings.M;
         _planeYSize = _cellSize * _settings.N;
 
+        List<PlaneTile> tiles = new List<PlaneTile>();
         for (int i = 0; i < _settings.M; i++)
         {
             for (int j = 0; j < _settings.N; j++)
             {
-                CreatePlaneTile(new Vector2Int(i, j));
+                tiles.Add(CreatePlaneTile(new Vector2Int(i, j)));
             }
         }
 
@@ -46,7 +47,7 @@ public class BattlefieldController : MonoBehaviour
         }
 
         BattleState state = new BattleState();
-        state.Init(units);
+        state.Init(units, tiles);
         _battleController.SetState(state);
     }
 

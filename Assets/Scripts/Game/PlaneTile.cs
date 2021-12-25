@@ -2,7 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaneTile : MonoBehaviour
+public class PlaneTile : FieldEntity
 {
-    public Vector2Int Coords { get; set; }
+    [SerializeField]
+    private PlaneTileVisual _visual;
+
+    public override void SetIsTarget(bool value)
+    {
+        _visual.SetIsTarget(value);
+    }
 }
