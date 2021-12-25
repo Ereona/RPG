@@ -14,6 +14,8 @@ public class BattleState
     private List<Unit> _availableForAttack = new List<Unit>();
     private List<PlaneTile> _availableForMove = new List<PlaneTile>();
 
+    private BattleHistory _history = new BattleHistory();
+
     public void Init(List<Unit> units, List<PlaneTile> tiles)
     {
         _units = units;
@@ -35,26 +37,27 @@ public class BattleState
         }
         _selectedUnit = null;
         ClearAvailability();
+        _history.Clear();
     }
 
     public void DoMove(PlaneTile tile)
     {
-        Unit u = _selectedUnit;
-        u.Move(tile.Coords);
+        _history.AddRecord(_selectedUnit, BattleAction.Move);
+        _selectedUnit.Move(tile.Coords);
         RecalcAvailability();
     }
 
     public void DoAttack(Unit target)
     {
-        Unit u = _selectedUnit;
-        u.Attack();
-        target.Damage(u.Settings.DamageAttackPoints);
+        _history.AddRecord(_selectedUnit, BattleAction.Attack);
+        _selectedUnit.Attack();
+        target.Damage(_selectedUnit.Settings.DamageAttackPoints);
         if (!target.IsAlive())
         {
             _units.Remove(target);
             target.Die();
-            RecalcAvailability();
         }
+        RecalcAvailability();
     }
 
     public void SelectUnit(Unit u)
@@ -70,7 +73,7 @@ public class BattleState
 
     public bool CanBeSelected(Unit u)
     {
-        return u.Owner == Turn;
+        return u.Owner == Turn && _history.CanDoSomeAction(u);
     }
 
     public bool CanBeAttacked(Unit u)
@@ -88,22 +91,28 @@ public class BattleState
         ClearAvailability();
         if (_selectedUnit != null)
         {
-            foreach (Unit u in _units)
+            if (_history.CanDoAction(_selectedUnit, BattleAction.Attack))
             {
-                if (u.Owner != _selectedUnit.Owner
-                    && Distance(u, _selectedUnit) <= _selectedUnit.Settings.AttackRange)
+                foreach (Unit u in _units)
                 {
-                    u.SetIsTarget(true);
-                    _availableForAttack.Add(u);
+                    if (u.Owner != _selectedUnit.Owner
+                        && Distance(u, _selectedUnit) <= _selectedUnit.Settings.AttackRange)
+                    {
+                        u.SetIsTarget(true);
+                        _availableForAttack.Add(u);
+                    }
                 }
             }
-            foreach (PlaneTile p in _tiles)
+            if (_history.CanDoAction(_selectedUnit, BattleAction.Move))
             {
-                if ((Distance(p, _selectedUnit) <= _selectedUnit.Settings.MoveRange)
-                    && !Occupied(p))
+                foreach (PlaneTile p in _tiles)
                 {
-                    p.SetIsTarget(true);
-                    _availableForMove.Add(p);
+                    if ((Distance(p, _selectedUnit) <= _selectedUnit.Settings.MoveRange)
+                        && !Occupied(p))
+                    {
+                        p.SetIsTarget(true);
+                        _availableForMove.Add(p);
+                    }
                 }
             }
         }
