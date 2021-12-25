@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class BattleController : MonoBehaviour
 {
+    [SerializeField]
+    private AIBrain _aiBrain;
+
     private BattleState _state;
 
     private void Start()
     {
         EventBus.MouseClick += EventBus_MouseClick;
+        EventBus.EndTurn += EventBus_EndTurn;
     }
 
     public void SetState(BattleState state)
     {
         _state = state;
+        _aiBrain.Init(state);
     }
 
     private void EventBus_MouseClick(Vector3 pos)
@@ -54,8 +59,15 @@ public class BattleController : MonoBehaviour
         }
     }
 
+    private void EventBus_EndTurn()
+    {
+        _state.ChangeTurn();
+        EventBus.RaiseTurnChanged(_state.Turn);
+    }
+
     private void OnDestroy()
     {
         EventBus.MouseClick -= EventBus_MouseClick;
+        EventBus.EndTurn += EventBus_EndTurn;
     }
 }

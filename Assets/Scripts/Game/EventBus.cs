@@ -10,4 +10,16 @@ public static class EventBus
     {
         MouseClick?.Invoke(arg);
     }
+
+    public static event Action EndTurn;
+    public static void RaiseEndTurn()
+    {
+        EndTurn?.Invoke();
+    }
+
+    public static event Action<Owner> TurnChanged;
+    public static void RaiseTurnChanged(Owner arg)
+    {
+        TurnChanged?.Invoke(arg);
+    }
 }

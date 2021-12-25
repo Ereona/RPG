@@ -11,8 +11,8 @@ public class BattleState
     private List<PlaneTile> _tiles;
     private Unit _selectedUnit;
 
-    private List<Unit> _availableForAttack = new List<Unit>();
-    private List<PlaneTile> _availableForMove = new List<PlaneTile>();
+    public List<Unit> AvailableForAttack { get; private set; }
+    public List<PlaneTile> AvailableForMove { get; private set; }
 
     private BattleHistory _history = new BattleHistory();
 
@@ -20,6 +20,8 @@ public class BattleState
     {
         _units = units;
         _tiles = tiles;
+        AvailableForAttack = new List<Unit>();
+        AvailableForMove = new List<PlaneTile>();
         SetTurn(Owner.Player);
     }
 
@@ -78,12 +80,12 @@ public class BattleState
 
     public bool CanBeAttacked(Unit u)
     {
-        return _availableForAttack.Contains(u);
+        return AvailableForAttack.Contains(u);
     }
 
     public bool CanMoveTo(PlaneTile tile)
     {
-        return _availableForMove.Contains(tile);
+        return AvailableForMove.Contains(tile);
     }
 
     private void RecalcAvailability()
@@ -99,7 +101,7 @@ public class BattleState
                         && Distance(u, _selectedUnit) <= _selectedUnit.Settings.AttackRange)
                     {
                         u.SetIsTarget(true);
-                        _availableForAttack.Add(u);
+                        AvailableForAttack.Add(u);
                     }
                 }
             }
@@ -111,7 +113,7 @@ public class BattleState
                         && !Occupied(p))
                     {
                         p.SetIsTarget(true);
-                        _availableForMove.Add(p);
+                        AvailableForMove.Add(p);
                     }
                 }
             }
@@ -120,16 +122,16 @@ public class BattleState
 
     private void ClearAvailability()
     {
-        foreach (Unit u in _availableForAttack)
+        foreach (Unit u in AvailableForAttack)
         {
             u.SetIsTarget(false);
         }
-        foreach (PlaneTile p in _availableForMove)
+        foreach (PlaneTile p in AvailableForMove)
         {
             p.SetIsTarget(false);
         }
-        _availableForAttack.Clear();
-        _availableForMove.Clear();
+        AvailableForAttack.Clear();
+        AvailableForMove.Clear();
     }
 
     private float Distance(FieldEntity f1, FieldEntity f2)
@@ -140,5 +142,10 @@ public class BattleState
     private bool Occupied(PlaneTile p)
     {
         return _units.Any(u => u.Coords == p.Coords);
+    }
+
+    public List<Unit> GetUnits(Owner owner)
+    {
+        return _units.Where(c => c.Owner == owner).ToList();
     }
 }
