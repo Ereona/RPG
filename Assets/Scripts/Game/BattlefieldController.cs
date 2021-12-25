@@ -12,6 +12,8 @@ public class BattlefieldController : MonoBehaviour
     private float _maxYSize;
     [SerializeField]
     private Fabric _fabric;
+    [SerializeField]
+    private BattleController _battleController;
 
     private float _cellSize;
     private float _planeXSize;
@@ -33,15 +35,19 @@ public class BattlefieldController : MonoBehaviour
             }
         }
 
-        List<Unit> _units = new List<Unit>();
+        List<Unit> units = new List<Unit>();
         foreach (BattleFieldUnitData data in _settings.PlayerUnits)
         {
-            _units.Add(CreateUnit(Owner.Player, data));
+            units.Add(CreateUnit(Owner.Player, data));
         }
         foreach (BattleFieldUnitData data in _settings.EnemyUnits)
         {
-            _units.Add(CreateUnit(Owner.Enemy, data));
+            units.Add(CreateUnit(Owner.Enemy, data));
         }
+
+        BattleState state = new BattleState();
+        state.Init(units);
+        _battleController.SetState(state);
     }
 
     private PlaneTile CreatePlaneTile(Vector2Int pos)
@@ -56,12 +62,13 @@ public class BattlefieldController : MonoBehaviour
     private Unit CreateUnit(Owner owner, BattleFieldUnitData data)
     {
         Unit unit = _fabric.CreateUnit(owner, data);
+        unit.Controller = this;
         unit.transform.localPosition = CalcPosition(new Vector2Int(data.MPos, data.NPos));
         unit.transform.localScale = Vector3.one * _cellSize;
         return unit;
     }
 
-    private Vector3 CalcPosition(Vector2Int pos)
+    public Vector3 CalcPosition(Vector2Int pos)
     {
         float x = pos.x * _cellSize - _planeXSize / 2;
         float z = pos.y * _cellSize - _planeYSize / 2;
