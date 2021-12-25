@@ -6,6 +6,8 @@ public class Unit : FieldEntity
 {
     [SerializeField]
     private UnitVisual _visual;
+    [SerializeField]
+    private HealthBar _healthBar;
 
     private UnitSettings _settings;
     public UnitSettings Settings 
@@ -15,6 +17,7 @@ public class Unit : FieldEntity
         { 
             _settings = value;
             Health = _settings.HealthPoints;
+            _healthBar.SetStartHealth(_settings.HealthPoints);
         }
     }
     private Owner _owner;
@@ -25,12 +28,25 @@ public class Unit : FieldEntity
         {
             _owner = value;
             _visual.SetOwner(value);
+            _healthBar.SetOwner(value);
         }
     }
 
     public BattlefieldController Controller { get; set; }
 
-    public int Health { get; private set; }
+    private int _health;
+    public int Health 
+    {
+        get 
+        { 
+            return _health; 
+        }
+        private set 
+        { 
+            _health = value;
+            _healthBar.SetHealth(value);
+        }
+    }
 
     public void Init(Owner owner, Vector2Int pos)
     {
@@ -52,6 +68,7 @@ public class Unit : FieldEntity
     public void Damage(int value)
     {
         Health -= value;
+        _visual.Damage();
     }
 
     public bool IsAlive()

@@ -11,6 +11,11 @@ public class PlaneTileVisual : MonoBehaviour
     [SerializeField]
     private Color _targetColor;
 
+    private void Start()
+    {
+        SetIsTarget(false);
+    }
+
     public void SetIsTarget(bool value)
     {
         _mesh.material.SetColor("_BaseColor", value ? _targetColor : _normalColor);

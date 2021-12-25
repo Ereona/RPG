@@ -14,6 +14,14 @@ public class UnitVisual : MonoBehaviour
     private GameObject _selection;
     [SerializeField]
     private GameObject _targetMark;
+    [SerializeField]
+    private ParticleSystem _damageParticles;
+
+    private void Start()
+    {
+        Deselect();
+        SetIsTarget(false);
+    }
 
     public void SetOwner(Owner owner)
     {
@@ -41,5 +49,10 @@ public class UnitVisual : MonoBehaviour
     public void SetIsTarget(bool value)
     {
         _targetMark.SetActive(value);
+    }
+
+    public void Damage()
+    {
+        _damageParticles.Play();
     }
 }

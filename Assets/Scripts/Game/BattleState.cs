@@ -58,6 +58,7 @@ public class BattleState
         {
             _units.Remove(target);
             target.Die();
+            CheckEndGame();
         }
         RecalcAvailability();
     }
@@ -147,5 +148,17 @@ public class BattleState
     public List<Unit> GetUnits(Owner owner)
     {
         return _units.Where(c => c.Owner == owner).ToList();
+    }
+
+    private void CheckEndGame()
+    {
+        if (GetUnits(Owner.Enemy).Count == 0)
+        {
+            EventBus.RaiseGameEnd(Owner.Player);
+        }
+        else if (GetUnits(Owner.Player).Count == 0)
+        {
+            EventBus.RaiseGameEnd(Owner.Enemy);
+        }
     }
 }

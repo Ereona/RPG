@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mesh: {fileID: 702497567086542168}
-  _normalColor: {r: 0.5803922, g: 0.8, b: 0.5921569, a: 1}
+  _normalColor: {r: 0.64118147, g: 0.5990566, b: 1, a: 1}
   _targetColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &5499460026422527159
 GameObject:

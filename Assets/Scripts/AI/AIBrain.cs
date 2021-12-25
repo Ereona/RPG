@@ -8,16 +8,28 @@ public class AIBrain : MonoBehaviour
     private BattleState _state;
     private float _delay = 1f;
 
+    private Coroutine _doActionsCoroutine;
+
     private void Start()
     {
         EventBus.TurnChanged += EventBus_TurnChanged;
+        EventBus.GameEnd += EventBus_GameEnd;
     }
 
     private void EventBus_TurnChanged(Owner obj)
     {
         if (obj == Owner.Enemy)
         {
-            StartCoroutine(DoActions());
+            _doActionsCoroutine = StartCoroutine(DoActions());
+        }
+    }
+
+    private void EventBus_GameEnd(Owner obj)
+    {
+        if (_doActionsCoroutine != null)
+        {
+            StopCoroutine(_doActionsCoroutine);
+            _doActionsCoroutine = null;
         }
     }
 
@@ -56,6 +68,8 @@ public class AIBrain : MonoBehaviour
                 }
             }
         }
+        yield return null;
+        _doActionsCoroutine = null;
         EventBus.RaiseEndTurn();
     }
 
@@ -78,5 +92,6 @@ public class AIBrain : MonoBehaviour
     private void OnDestroy()
     {
         EventBus.TurnChanged -= EventBus_TurnChanged;
+        EventBus.GameEnd -= EventBus_GameEnd;
     }
 }

@@ -28,6 +28,10 @@ public class BattleController : MonoBehaviour
             Debug.LogError("BattleController not inited");
             return;
         }
+        if (_state.Turn != Owner.Player)
+        {
+            return;
+        }
         RaycastHit hit;
         var ray = Camera.main.ScreenPointToRay(pos);
         if (Physics.Raycast(ray, out hit))
@@ -68,6 +72,6 @@ public class BattleController : MonoBehaviour
     private void OnDestroy()
     {
         EventBus.MouseClick -= EventBus_MouseClick;
-        EventBus.EndTurn += EventBus_EndTurn;
+        EventBus.EndTurn -= EventBus_EndTurn;
     }
 }

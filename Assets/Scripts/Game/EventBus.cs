@@ -22,4 +22,10 @@ public static class EventBus
     {
         TurnChanged?.Invoke(arg);
     }
+
+    public static event Action<Owner> GameEnd;
+    public static void RaiseGameEnd(Owner arg)
+    {
+        GameEnd?.Invoke(arg);
+    }
 }
