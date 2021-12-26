@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SO/BattlefieldSettings")]
-public class BattlefieldSettings : ScriptableObject
+[CreateAssetMenu(menuName = "SO/BattleFieldSettings")]
+public class BattleFieldSettings : ScriptableObject
 {
     public int N;
     public int M;

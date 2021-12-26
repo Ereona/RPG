@@ -20,6 +20,11 @@ public class AIBrain : MonoBehaviour
     {
         if (obj == Owner.Enemy)
         {
+            if (_state == null)
+            {
+                Debug.LogError("AIBrain not inited");
+                return;
+            }
             _doActionsCoroutine = StartCoroutine(DoActions());
         }
     }

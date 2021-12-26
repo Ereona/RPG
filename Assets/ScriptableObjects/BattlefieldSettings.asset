@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbe248bc5b7ff7b4e81cdfa2f4bd26c1, type: 3}
-  m_Name: BattlefieldSettings
+  m_Name: BattleFieldSettings
   m_EditorClassIdentifier: 
   N: 10
   M: 12
@@ -18,14 +18,14 @@ MonoBehaviour:
   - Unit: {fileID: 11400000, guid: b0df20789ef994444ba4fb7961564ad8, type: 2}
     NPos: 1
     MPos: 2
-  - Unit: {fileID: 11400000, guid: b0df20789ef994444ba4fb7961564ad8, type: 2}
+  - Unit: {fileID: 11400000, guid: ec83e7b8057897c4b93261303341aed9, type: 2}
     NPos: 2
     MPos: 2
   - Unit: {fileID: 11400000, guid: b0df20789ef994444ba4fb7961564ad8, type: 2}
     NPos: 3
     MPos: 2
   EnemyUnits:
-  - Unit: {fileID: 11400000, guid: b0df20789ef994444ba4fb7961564ad8, type: 2}
+  - Unit: {fileID: 11400000, guid: ec83e7b8057897c4b93261303341aed9, type: 2}
     NPos: 4
     MPos: 6
   - Unit: {fileID: 11400000, guid: b0df20789ef994444ba4fb7961564ad8, type: 2}

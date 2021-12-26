@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class BattleController : MonoBehaviour
 {
-    [SerializeField]
-    private AIBrain _aiBrain;
-
     private BattleState _state;
 
     private void Start()
@@ -15,10 +12,9 @@ public class BattleController : MonoBehaviour
         EventBus.EndTurn += EventBus_EndTurn;
     }
 
-    public void SetState(BattleState state)
+    public void SetBattle(BattleState state)
     {
         _state = state;
-        _aiBrain.Init(state);
     }
 
     private void EventBus_MouseClick(Vector3 pos)

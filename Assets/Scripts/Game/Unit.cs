@@ -32,7 +32,7 @@ public class Unit : FieldEntity
         }
     }
 
-    public BattlefieldController Controller { get; set; }
+    public BattleFieldSize Sizes { get; set; }
 
     private int _health;
     public int Health 
@@ -57,7 +57,7 @@ public class Unit : FieldEntity
     public void Move(Vector2Int target)
     {
         Coords = target;
-        transform.localPosition = Controller.CalcPosition(Coords);
+        transform.localPosition = Sizes.CalcPosition(Coords);
     }
 
     public void Attack()
