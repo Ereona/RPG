@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad976071dc33d4e4596b600ea25af060, type: 3}
   m_Name: UnitSettings1
   m_EditorClassIdentifier: 
-  HealthPoints: 10
-  DamageAttackPoints: 3
-  AttackRange: 5
-  MoveRange: 6
-  Prefab: {fileID: 9004805563940228502, guid: 98822c9e0f2ed044ea3af9dbc753f67f, type: 3}
+  _healthPoints: 10
+  _damageAttackPoints: 3
+  _attackRange: 5
+  _moveRange: 6
+  _prefab: {fileID: 9004805563940228502, guid: 98822c9e0f2ed044ea3af9dbc753f67f, type: 3}
